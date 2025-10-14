@@ -68,19 +68,29 @@ def decode_uart_from_analog(
         vmin = float(np.nanmin(arr))
         vmax = float(np.nanmax(arr))
         amp = max(1e-12, (vmax - vmin) / 2.0)
-        hyst_v = abs(hysteresis_percent) * amp
+        #hyst_v = abs(hysteresis_percent) * amp
 
         # Normalize parity choice: only none/even/odd supported
         parity_norm = (parity or "none").strip().lower()
         if parity_norm not in ("none", "even", "odd"):
             parity_norm = "none"
 
-        high_th = threshold_v + hyst_v   # 1.825
-        low_th = threshold_v - hyst_v    # 0.175
+        #high_th = threshold_v + hyst_v   # 1.825
+        #low_th = threshold_v - hyst_v    # 0.175
+
+        # *** CHANGED: Select thresholds based on signal amplitude ***
+        if (vmax - vmin) > 2.0:  # Large swing, use (4, -0.5)
+            high_th = 4.0
+            low_th = -0.5
+        else:  # Smaller swing, use (2.8, 0.5)
+            high_th = 2.8
+            low_th = 0.5
 
         # Schmitt trigger digitalization (stateful)
         digital = np.zeros(n, dtype=np.int8)
-        state = 1 if arr[0] >= threshold_v else 0
+        #state = 1 if arr[0] >= threshold_v else 0
+        # *** CHANGED: Use average of high_th and low_th for initial state ***
+        state = 1 if arr[0] >= (high_th + low_th) / 2 else 0
         for i in range(n):
             v = arr[i]
             if state == 1:
@@ -115,14 +125,16 @@ def decode_uart_from_analog(
             if a > b:
                 a = b = center_idx
             seg = arr[a:b+1]
-            count_high = np.count_nonzero(seg >= threshold_v)
+            #count_high = np.count_nonzero(seg >= threshold_v)
+            count_high = np.count_nonzero(seg >= (high_th + low_th) / 2)
             return 1 if count_high >= (seg.size / 2.0) else 0
 
         def window_fraction_high(center_idx: int) -> float:
             a = max(0, center_idx - win_radius)
             b = min(n - 1, center_idx + win_radius)
             seg = arr[a:b+1]
-            return float(np.count_nonzero(seg >= threshold_v)) / float(seg.size)
+            #return float(np.count_nonzero(seg >= threshold_v)) / float(seg.size)
+            return float(np.count_nonzero(seg >= (high_th + low_th) / 2)) / float(seg.size)
 
         next_search_idx = -1
         for idx in falling:
@@ -226,11 +238,5 @@ def decode_uart_from_analog(
         # keep robust: return what was decoded so far
         pass
 
-    # Compose return value preserving backward compatibility
-    if return_parity and return_frames:
         return decoded, sample_times, bit_levels, parity_flags, frames
-    if return_parity:
-        return decoded, sample_times, bit_levels, parity_flags
-    if return_frames:
-        return decoded, sample_times, bit_levels, frames
-    return decoded, sample_times, bit_levels
+
