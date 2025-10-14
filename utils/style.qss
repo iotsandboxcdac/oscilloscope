@@ -1,0 +1,85 @@
+QWidget {
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    font-family: "Segoe UI", "Arial";
+    font-size: 11pt;
+}
+
+QMainWindow::separator {
+    background: #444;
+    width: 2px;
+    height: 2px;
+}
+
+QToolBar {
+        background: #2a2a2a;
+        border: none;
+        spacing: 6px;
+        padding: 4px;
+}
+QToolBar QToolButton {
+        background: #333;
+        border: 1px solid #555;
+        border-radius: 6px;
+        padding: 6px 12px;
+        margin: 2px;
+}
+QToolBar QToolButton:checked {
+        background: #007acc;
+        border: 1px solid #3399ff;
+}
+QToolBar QToolButton:hover {
+        background: #444;
+}
+
+QPushButton {
+        background-color: #2e2e2e;
+        border: 1px solid #555;
+        border-radius: 6px;
+        padding: 6px 12px;
+}
+QPushButton:hover {
+        background-color: #3c3c3c;
+}
+QPushButton:pressed {
+        background-color: #007acc;
+        border: 1px solid #3399ff;
+}
+
+QCheckBox, QRadioButton {
+        spacing: 6px;
+}
+QCheckBox::indicator, QRadioButton::indicator {
+        width: 16px;
+        height: 16px;
+}
+
+QTableWidget {
+        gridline-color: #444;
+        selection-background-color: #007acc;
+        alternate-background-color: #2b2b2b;
+}
+QHeaderView::section {
+        background-color: #2d2d2d;
+        padding: 4px;
+        border: 1px solid #444;
+}
+
+QLineEdit, QSpinBox, QDoubleSpinBox, QComboBox {
+        background-color: #2e2e2e;
+        border: 1px solid #555;
+        border-radius: 4px;
+        padding: 4px;
+        selection-background-color: #007acc;
+}
+
+QTextEdit {
+        background-color: #111;
+        border: 1px solid #444;
+        border-radius: 4px;
+}
+
+QStatusBar {
+        background: #2a2a2a;
+        color: #ccc;
+}

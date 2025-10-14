@@ -1,0 +1,80 @@
+/* MainWindow Styles */
+QMainWindow {
+    background-color: #ecf0f1;
+}
+
+QMenuBar {
+    background-color: #2c3e50;
+    color: white;
+    font-size: 13px;      /* increased */
+    padding: 4px;         /* more breathing room */
+}
+
+QMenuBar::item:selected {
+    background-color: #34495e;
+}
+
+QMenu {
+    background-color: #5f7c8a; 
+    border: 1px solid #34495e;
+    font-size: 13px;      /* increased */
+    padding: 4px;
+}
+
+QMenu::item:selected {
+    background-color: #1abc9c;
+}
+
+QAction {
+    font-size: 13px;      /* increased */
+    color: white;
+}
+
+QWidget {
+    font-family: Arial, sans-serif;
+    font-size: 12px;      /* slightly bigger */
+}
+
+QPushButton {
+    background-color: #1abc9c;
+    color: white;
+    border-radius: 4px;   /* smoother */
+    padding: 6px 10px;    /* bigger touch area */
+    font-size: 12px;      /* increased */
+    min-height: 28px;     /* ensures consistent height */
+}
+
+QPushButton:hover {
+    background-color: #16a085;
+}
+
+QLineEdit, QComboBox, QSpinBox {
+    padding: 5px 8px;     /* bigger input fields */
+    border: 1px solid #7f8c8d;
+    border-radius: 3px;
+    background-color: #fff;
+    font-size: 12px;
+    min-height: 26px;
+}
+
+QTableWidget {
+    border: 1px solid #7f8c8d;
+    background-color: #fff;
+    gridline-color: #bdc3c7;
+    font-size: 12px;
+}
+
+QTableWidget::item:selected {
+    background-color: #1abc9c;
+    color: white;
+}
+
+#TestNameField {
+    padding: 6px 10px;    /* increased */
+    border: 2px solid #1abc9c;
+    border-radius: 5px;
+    background-color: #ffffff;
+    selection-background-color: #1abc9c;
+    selection-color: white;
+    font-size: 12px;
+}
